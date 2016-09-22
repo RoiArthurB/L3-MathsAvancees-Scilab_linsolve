@@ -1,0 +1,4 @@
+Dans l'exo 3
+	-> Exo3.sci
+		-> Utilisez les fonctions précédentes afin que la première inconnue du système (en première colonne) n’intervienne
+plus que dans une seule équation et que cette équation soit la première.
