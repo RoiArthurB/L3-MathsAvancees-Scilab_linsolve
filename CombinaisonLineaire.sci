@@ -1,7 +1,7 @@
 function result = CombinaisonLineaire(A, ln1, ln2, l)
     ligneAAjouter = A(ln1, :);
     result = A;
-    result(ln2, :) = result(ln2, :) + ligneAAjouter*l;
+    result(ln2, :) = result(ln2, :) - ligneAAjouter*l;
 endfunction
 
 // Test matrice devoir

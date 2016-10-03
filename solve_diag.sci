@@ -65,6 +65,7 @@ M1 = [3 0; 0 -1];
 M1result = [2; -1];
 
 disp( solve_diag(M1, M1result), "La première matrice : ");
+disp("-_-_-_- linsolve -_-_-_-"); disp( linsolve(M1, -M1result));
 
 // Test de la seconde matrice
 
@@ -72,10 +73,11 @@ M2 = [1 0 0; 0 5 0; 0 0 -1];
 M2result = [-2; 3; 1];
 
 disp( solve_diag(M2, M2result), "La seconde matrice : ");
+ disp("-_-_-_- linsolve -_-_-_-"); disp( linsolve(M2, -M2result));
 
 // Test de la matrice random
-indice = 10;
-Mrandom = rand(indice, indice);
-MrandomResult = rand(indice, 1);
-
-disp(solve_diag(Mrandom, MrandomResult), "Résultat de la matrice random : ", MrandomResult, "b", Mrandom, "A")
+//indice = 10;
+//Mrandom = rand(indice, indice);
+//MrandomResult = rand(indice, 1);
+//
+//disp(solve_diag(Mrandom, MrandomResult), "Résultat de la matrice random : ", MrandomResult, "b", Mrandom, "A")

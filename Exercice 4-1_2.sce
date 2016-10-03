@@ -37,6 +37,30 @@ function result = CombinaisonLineaire(A, ln1, ln2, l)
     result(ln2, :) = result(ln2, :) - ligneAAjouter*l;
 endfunction
 
+// Pour les système sur/sous-déterminés [EXO1]
+function result = solve_diag(A, b)
+    if size(A, "r") == size(A, "c") then
+        if size(A, "r") == size(b, "r") then
+            for i=1:size(A, "r")
+                if(A(i,i) == 0)
+                    if(b(i) <> 0)
+                        result = "Equation sur-déterminée";
+                        break;
+                    else
+                        result = "Equation sous-déterminée";
+                        break;
+                    end
+                else
+                    result(i) = b(i)/A(i, i)
+                end
+            end
+        else
+            result = "b ne peut pas être une solution de A"
+        end
+    else
+        result = "La première matrice n''est pas carrée"
+    end
+endfunction;
 
 function result = echelonnage(A)
     
@@ -62,17 +86,40 @@ function result = echelonnage(A)
         end
     end
     
+    //Récupère la pointe basse du triangle
+    if(nbrCol > nbrLn)
+        diagBas = nbrLn;
+    else
+        diagBas = nbrCol
+    end
+    
+    //Jordan
+    for i=diagBas:-1:1  //Balayage par colonne
+        if ( A(i,i) <> 0 ) then //Pour éviter la division par zéro
+            // j = i-1 -> toutes les lignes du triangle sauf la diagonale
+            for j=(i-1):-1:1    //Balayage par ligne
+                A = CombinaisonLineaire(A, i, j, (A(j,i)/A(i,i)));
+            end
+        end
+    end
+    
     result = A;
 endfunction
 
+// Parce que je suis un flemmard
+function result = myLinsolve(A)
+    A = echelonnage(A);
+    result = solve_diag( A(:,1:(size(A, "c") - 1)), A(:,size(A, "c")) )
+endfunction
 
 // Test matrice devoir
-M4 = [0 -1 1 1; -6 1 -2 -1; -5 2 -1 0]
+// M4 = [2 -1 1 1; -6 1 -2 -1; -5 2 -1 0]
+M4 = [1 2 -1 3 22; 2 -1 4 -5 -38; -1 -2 1 2 3; 3 -4 2 5 6]
+//M4 = [2 3 5 1; 3 -5 2 0; 1 -8 -3 1]
+//M4 = [2 3 5 1; 3 -5 2 0; 5 -2 7 1]
 
-M4 = echelonnage(M4);
+disp( myLinsolve(M4) )
 
-disp( M4 )
-
-
+disp( linsolve(M4(:,1:4), -M4(:,5)) )
 
 
