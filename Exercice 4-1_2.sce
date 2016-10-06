@@ -58,7 +58,7 @@ function result = solve_diag(A, b)
             result = "b ne peut pas être une solution de A"
         end
     else
-        result = "La première matrice n''est pas carrée"
+        result = "Le système n''est pas carrée"
     end
 endfunction;
 
@@ -109,17 +109,23 @@ endfunction
 // Parce que je suis un flemmard
 function result = myLinsolve(A)
     A = echelonnage(A);
-    result = solve_diag( A(:,1:(size(A, "c") - 1)), A(:,size(A, "c")) )
+    disp("Le linsolve by Brugiere et Tournois");
+    disp( solve_trisup3( A(:,1:(size(A, "c") - 1)), A(:,size(A, "c")) ) );
+    disp("Le linsolve by Scilab");
+    disp( linsolve(A(:,1:(size(A, "c") - 1)), -A(:,size(A, "c"))) );
+    result = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // #EasterEgg #needToDisplay
 endfunction
 
 // Test matrice devoir
-// M4 = [2 -1 1 1; -6 1 -2 -1; -5 2 -1 0]
-M4 = [1 2 -1 3 22; 2 -1 4 -5 -38; -1 -2 1 2 3; 3 -4 2 5 6]
+//      Matrices valides
+//M4 = [2 -1 1 1; -6 1 -2 -1; -5 2 -1 0]
+//M4 = [1 2 -1 3 22; 2 -1 4 -5 -38; -1 -2 1 2 3; 3 -4 2 5 6]
+//      Matrices sur-déterminée
 //M4 = [2 3 5 1; 3 -5 2 0; 1 -8 -3 1]
+//M4 = [1 -2 1 1 1; 1 -2 1 -1 -1; 1 -2 1 5 5; 1 -2 1 -1 -1; 1 -2 1 5 5]
+//      Matrices sous-déerminée
 //M4 = [2 3 5 1; 3 -5 2 0; 5 -2 7 1]
 
-disp( myLinsolve(M4) )
-
-disp( linsolve(M4(:,1:4), -M4(:,5)) )
+myLinsolve(M4)
 
 
